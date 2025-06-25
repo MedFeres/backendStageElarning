@@ -1,0 +1,33 @@
+## Ignore Visual Studio temporary files, build results, and user-generated files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Ignore build output
+bin/
+obj/
+out/
+
+## Ignore Rider
+.idea/
+
+## Ignore logs and dumps
+*.log
+*.dmp
+
+## Ignore published files
+publish/
+*.dbmdl
+*.db
+*.sqlite
+
+## Ignore secret settings
+secrets.json
+
+## Others
+*.swp
+*.tmp
+*.bak
+*.old
