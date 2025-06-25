@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\msi\\source\\repos\\backendStageElarning\\ElearningBackend.csproj": {}
+    "C:\\elearning\\backendStageElarning\\ElearningBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\msi\\source\\repos\\backendStageElarning\\ElearningBackend.csproj": {
+    "C:\\elearning\\backendStageElarning\\ElearningBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\msi\\source\\repos\\backendStageElarning\\ElearningBackend.csproj",
+        "projectUniqueName": "C:\\elearning\\backendStageElarning\\ElearningBackend.csproj",
         "projectName": "ElearningBackend",
-        "projectPath": "C:\\Users\\msi\\source\\repos\\backendStageElarning\\ElearningBackend.csproj",
-        "packagesPath": "C:\\Users\\msi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\msi\\source\\repos\\backendStageElarning\\obj\\",
+        "projectPath": "C:\\elearning\\backendStageElarning\\ElearningBackend.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\elearning\\backendStageElarning\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\msi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
