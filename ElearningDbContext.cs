@@ -9,9 +9,6 @@ namespace ElearningBackend
         public ElearningDbContext(DbContextOptions<ElearningDbContext> options) : base(options) { }
 
         public DbSet<Utilisateur> Utilisateurs { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Formateur> Formateurs { get; set; }
-        public DbSet<Admin> Admins { get; set; }
 
         public DbSet<Cours> Cours { get; set; }
         public DbSet<Contenu> Contenus { get; set; }
@@ -31,7 +28,25 @@ namespace ElearningBackend
                 .HasValue<Quiz>("Quiz")
                 .HasValue<Video>("Video")
                 .HasValue<Resume>("Resume");
+            
+            modelBuilder.Entity<Utilisateur>()
+                .HasDiscriminator<string>("Role")
+                .HasValue<Client>("Client")
+                .HasValue<Formateur>("Formateur")
+                .HasValue<Admin>("Admin");
+            modelBuilder.Entity<Paiement>()
+                  .HasOne(p => p.Client)
+                  .WithMany(c => c.Paiements)
+                  .HasForeignKey(p => p.ClientId);
+
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.Cours)
+                .WithMany()
+                .HasForeignKey(p => p.CoursId);
+
         }
+        
+
     }
 
 }

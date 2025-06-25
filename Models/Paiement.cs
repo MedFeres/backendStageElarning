@@ -8,6 +8,8 @@
 
         public int ClientId { get; set; }
         public Client Client { get; set; }
+        public int CoursId { get; set; }
+        public Cours Cours { get; set; }
     }
 
 }
