@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Microsoft.EntityFrameworkCore;
+
 namespace ElearningBackend
 {
     public class ElearningDbContext : DbContext
@@ -31,7 +32,13 @@ namespace ElearningBackend
                 .HasValue<Quiz>("Quiz")
                 .HasValue<Video>("Video")
                 .HasValue<Resume>("Resume");
+
+            // 🔗 Relation Admin → Certificats
+            modelBuilder.Entity<Certificat>()
+                .HasOne(c => c.Admin)
+                .WithMany(a => a.CertificatsGeneres)
+                .HasForeignKey(c => c.AdminId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
-
 }
