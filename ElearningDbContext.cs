@@ -21,6 +21,8 @@ namespace ElearningBackend
 
         public DbSet<Paiement> Paiements { get; set; }
         public DbSet<Certificat> Certificats { get; set; }
+        public DbSet<ResultatQuiz> ResultatsQuiz { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,7 +33,46 @@ namespace ElearningBackend
                 .HasValue<Quiz>("Quiz")
                 .HasValue<Video>("Video")
                 .HasValue<Resume>("Resume");
+
+            modelBuilder.Entity<Certificat>()
+                .HasOne(c => c.Admin)
+                .WithMany(a => a.CertificatsGeneres)
+                .HasForeignKey(c => c.AdminId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Expediteur)
+                .WithMany()
+                .HasForeignKey(m => m.ExpediteurId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Destinataire)
+                .WithMany()
+                .HasForeignKey(m => m.DestinataireId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Ajout important ici : empêche la suppression en cascade sur Paiement.ClientId
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.Client)
+                .WithMany(c => c.Paiements)  // colle bien à ta propriété ICollection<Paiement> dans Client
+                .HasForeignKey(p => p.ClientId)
+                .OnDelete(DeleteBehavior.Restrict); // <== interdit cascade delete ici
+
+            // Garde la suppression en cascade sur Paiement.CoursId si souhaité
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.Cours)
+                .WithMany()
+                .HasForeignKey(p => p.CoursId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ResultatQuiz>()
+    .HasOne(rq => rq.Client)
+    .WithMany(c => c.ResultatsQuiz)
+    .HasForeignKey(rq => rq.ClientId)
+    .OnDelete(DeleteBehavior.Restrict); // ✅ ou .NoAction()
+
         }
+
     }
 
 }

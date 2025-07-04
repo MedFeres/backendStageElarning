@@ -1,83 +1,49 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElearningBackend.Controllers
 {
-    public class PaiementController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PaiementController : ControllerBase
     {
-        // GET: PaiementController
-        public ActionResult Index()
+        private readonly ElearningDbContext _context;
+
+        public PaiementController(ElearningDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        // GET: PaiementController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost("effectuer")]
+        public async Task<IActionResult> EffectuerPaiement([FromBody] Paiement paiement)
         {
-            return View();
-        }
+            var cours = await _context.Cours.Include(c => c.Formateur).FirstOrDefaultAsync(c => c.Id == paiement.CoursId);
+            if (cours == null)
+                return NotFound("Cours introuvable.");
 
-        // GET: PaiementController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            paiement.DatePaiement = DateTime.UtcNow;
+            _context.Paiements.Add(paiement);
 
-        // POST: PaiementController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            float montantFormateur = paiement.Montant * 0.7f;
+            float montantAdmin = paiement.Montant * 0.3f;
+
+            // Mise à jour du compte bancaire fictif
+            cours.Formateur.CompteBancaire += $" +{montantFormateur}";
+            var admin = _context.Admins.FirstOrDefault();
+            if (admin != null)
+                admin.CompteBancaire += $" +{montantAdmin}";
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PaiementController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: PaiementController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PaiementController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PaiementController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                message = "Paiement réussi avec répartition",
+                montantTotal = paiement.Montant,
+                formateur = montantFormateur,
+                admin = montantAdmin
+            });
         }
     }
+
 }
