@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ElearningBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0c1f0bdf2a8bd5f51deb0428e3dc61ac78cf1be")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42c556d5b13ebe0a2270e27e5095b68157944160")]
 [assembly: System.Reflection.AssemblyProductAttribute("ElearningBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ElearningBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

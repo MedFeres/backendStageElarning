@@ -81,5 +81,15 @@ namespace ElearningBackend.Controllers
 
             return NoContent();
         }
+        [HttpGet("role/{role}")]
+        public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUsersByRole(string role)
+        {
+            var users = await _context.Utilisateurs
+                .Where(u => EF.Property<string>(u, "Discriminator") == role)
+                .ToListAsync();
+
+            return users;
+        }
+
     }
 }
